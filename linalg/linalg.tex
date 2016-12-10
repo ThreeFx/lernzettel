@@ -1,0 +1,107 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{parskip}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{colonequals}
+
+\newcommand{\uniti}{i}
+% also called \logeq "logically equivalent to"
+\newcommand{\defas}{\ratio\Leftrightarrow}
+
+\renewcommand{\Re}[1]{\operatorname{Re}{#1}}
+\renewcommand{\Im}[1]{\operatorname{Im}{#1}}
+\newcommand{\conj}[1]{\bar{#1}}
+
+\setcounter{section}{-1}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+
+
+\begin{document}
+
+\author{Ben Fiedler}
+\title{Linear Algebra \vspace{.5cm}
+       \large{Özlem Imamoglu, Olga Sorkine-Hornung}}
+\date{ }
+
+\maketitle
+\tableofcontents
+
+\newpage
+
+\section{Definitions}
+
+\subsection{Complex numbers}
+
+The complex numbers are an extension of the real numbers which posess the ability to
+solve equations of the form:
+
+$$ (x + 5) ^ 2 = -81 $$
+
+\subsubsection{Imaginary unit}
+
+In $\mathbb{R}$, no solutions exist for the equation:
+
+\begin{equation}
+    x^2 = {-1}
+\end{equation}
+
+To solve these, a number $\uniti$ is introduced with the following property:
+
+\begin{equation}
+    \uniti^2 = {-1}
+\end{equation}
+
+$\uniti$ is called the imaginary unit, as it behaves similar to $1$ with respect to
+the imaginary numbers. Complex numbers are a combination of a real and an imaginary number:
+
+\begin{equation}
+    z = (x, y) \defas z = x + \uniti y \quad \text{with} \quad x, y \in \mathbb{R}
+\end{equation}
+
+$x$ is called the real part of $z$, denoted as $\Re{z}$ and $y$ is called the
+imaginary part of $z$, denoted as $\Im{z}$:
+
+$$ \Re{z} \defas x \quad \text{and} \quad \Im{z} \defas y $$
+
+\subsubsection{Operations}
+
+The complex numbers form a \textit{field}. For two complex numbers
+$ z = x + \uniti y $ and $ w = u + \uniti v $ we can define
+addition and multiplication as follows:
+
+\begin{defn} Addition
+    $$ z + w \defas (x + u) + \uniti (y + v) $$
+\end{defn}
+\begin{defn} Multiplication
+    $$ z \times w \defas (xu - yw) + \uniti (xv + uy) $$
+\end{defn}
+
+Furthermore, we can define an additional operation, called complex conjugate.
+
+\begin{defn}
+    For every complex number $z = x + \uniti y$,
+    we can define it's complex conjugate $\conj{z}$ as follows:
+    $$ \conj{z} \defas x - \uniti y $$
+\end{defn}
+
+\section{Linear Equations}
+
+\section{Matrices and Vectors in $\mathbb{R}^{n}$ and $\mathbb{C}^{n}$}
+
+\subsection{LU decomposition}
+
+\section{Vector spaces}
+
+\section{Linear transformations}
+
+\section{Scalar product}
+
+\section{Least squares method and QR decomposition}
+
+\end{document}
