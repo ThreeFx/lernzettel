@@ -6,26 +6,51 @@
 \usepackage{parskip}
 
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
-\usepackage{colonequals}
+\usepackage{mathtools}
 
 \newcommand{\uniti}{i}
-% also called \logeq "logically equivalent to"
-\newcommand{\defas}{\ratio\Leftrightarrow}
+\newcommand{\defas}{\coloneqq}
+\newcommand{\fto}{\rightarrow}
 
 \renewcommand{\Re}[1]{\operatorname{Re}{#1}}
 \renewcommand{\Im}[1]{\operatorname{Im}{#1}}
 \newcommand{\conj}[1]{\bar{#1}}
 
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% Shortcuts for lin. alg
+\newcommand{\I}{\mat{I}}
+\newcommand{\A}{\mat{A}}
+
+\newcommand{\rank}[1]{\operatorname{rank} #1}
+
+\newcommand{\Er}{E_{\lambda}}
+
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+
+%\newcommand{\ker}{\text{ker}}
+
+\let\oldxi\xi
+\renewcommand{\xi}{\mathbb{\oldxi}}
+
 \setcounter{section}{-1}
 
-\theoremstyle{definition}
+\theoremstyle{plain}
 \newtheorem{defn}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}{Threorem}[lemma]
+\newtheorem{corollary}{Corollary}[lemma]
 
+
+\numberwithin{equation}{section}
 
 \begin{document}
 
 \author{Ben Fiedler}
-\title{Linear Algebra \vspace{.5cm}
+\title{Linear Algebra \\
        \large{Özlem Imamoglu, Olga Sorkine-Hornung}}
 \date{ }
 
@@ -45,7 +70,7 @@ $$ (x + 5) ^ 2 = -81 $$
 
 \subsubsection{Imaginary unit}
 
-In $\mathbb{R}$, no solutions exist for the equation:
+In $\R$, no solutions exist for the equation:
 
 \begin{equation}
     x^2 = {-1}
@@ -61,7 +86,7 @@ $\uniti$ is called the imaginary unit, as it behaves similar to $1$ with respect
 the imaginary numbers. Complex numbers are a combination of a real and an imaginary number:
 
 \begin{equation}
-    z = (x, y) \defas z = x + \uniti y \quad \text{with} \quad x, y \in \mathbb{R}
+    z \defas (x, y) \defas z = x + \uniti y \quad \text{with} \quad x, y \in \R
 \end{equation}
 
 $x$ is called the real part of $z$, denoted as $\Re{z}$ and $y$ is called the
@@ -92,7 +117,7 @@ Furthermore, we can define an additional operation, called complex conjugate.
 
 \section{Linear Equations}
 
-\section{Matrices and Vectors in $\mathbb{R}^{n}$ and $\mathbb{C}^{n}$}
+\section{Matrices and Vectors in $\R^{n}$ and $\mathbb{C}^{n}$}
 
 \subsection{LU decomposition}
 
@@ -103,5 +128,139 @@ Furthermore, we can define an additional operation, called complex conjugate.
 \section{Scalar product}
 
 \section{Least squares method and QR decomposition}
+
+\section{Determinants}
+
+\section{Eigenvectors and Eigenvalues}
+
+\subsection{Definition}
+
+\begin{defn}
+\label{eigenvalue}
+    Let $F \colon V \rightarrow V$ be a linear mapping on the vector space $V$.
+    A value $\lambda$ is an Eigenvalue if there exists an Eigenvector $x \neq 0$
+    such that:
+
+    \begin{equation}
+        F(x) = \lambda x
+    \end{equation}
+\end{defn}
+
+An Eigenvalue $\lambda$ defines an Eigenspace $\Er$, which is a subspace
+of $V$:
+
+\begin{equation}
+    \Er \defas \{ v \in V \mid F(v) = \lambda v \}
+\end{equation}
+
+The set of all Eigenvalues of $F$ is denoted as spectrum of $F$.
+
+Since every matrix $\A$ defines a linear mapping $F$ and vice versa,
+matrices also have Eigenvalues $\lambda$ defined as follows: $\lambda$ is
+an Eigenvalue of $\A$ iff there exists a vector $\xi$ such that:
+
+\begin{equation}
+    \A \xi = \xi \lambda
+\end{equation}
+
+\begin{lemma}
+\label{equiv-map-mat}
+    Let $F \colon V \rightarrow V$ be a linear mapping,
+    $\kappa_{V} \colon V \rightarrow \E^{n}$ a coordinate mapping for an
+    arbitrary basis and $\A = \kappa_{V} F \inv{\kappa_{V}}$ the matrix
+    corresponding to $F$. Then we have:
+
+    \begin{equation*}
+        \begin{gathered}
+            \lambda \enspace \text{EVal of} \enspace F
+                \iff \lambda \enspace \text{EVal of} \enspace \A \\
+            x \enspace \text{EVec of} \enspace F
+                \iff x \enspace \text{EVec of} \enspace \A
+        \end{gathered}
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    From $F x = \lambda x$ follows $\kappa_{V}(F x) = \kappa_{V}(\lambda x) =
+    \lambda \kappa_{V}(x) = \lambda \xi$. From the definition of $\kappa_{V}$ and
+    $\A$, we have $\A \xi = \kappa_{V}(F x)$, so $\A \xi = \lambda \xi$.
+    From $\inv{\kappa_{V}}$ the opposite follows.
+\end{proof}
+
+An Eigenvector $v$ for an Eigenvalue $\lambda$ is not unique, as we can see that:
+
+\begin{equation*}
+    F v = \lambda v \quad \implies \quad F (\alpha v) = \lambda (\alpha v).
+\end{equation*}
+
+holds due to the linearity of $F$. From this follows that the Eigenspace $\Er$
+of an Eigenvalue $\lambda$ is at least 1-dimensional.
+
+The Eigenraum $\Er$ is the set of vectors $v$ for which:
+
+\begin{equation}
+    (F - \lambda I) v = 0
+\end{equation}
+
+\begin{lemma}
+\label{lem:ev-kern}
+    $\lambda$ is an Eigenvalue of $F \colon V \rightarrow V$ iff $\ker (F - \lambda \I)$
+    contains more than the null vector. The Eigenspace $\Er$ is a
+    subspace of $V$ greater than the null space defined as:
+    \begin{equation}
+        \Er = \ker (F - \lambda \I)
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Assume $\lambda$ is an Eigenvalue of $F$. Then we follow:
+    \begin{align*}
+        F v = \lambda v \ &\iff \ F v - \lambda v = 0 \\
+        &\iff \ (F - \lambda \I) v = 0 \\
+        &\iff \ v \in \ker (F - \lambda \I).
+    \end{align*}
+    The reverse follows in the same fashion.
+\end{proof}
+
+\begin{defn}
+\label{geo-mult}
+    The \textbf{geometric multiplicity} of an Eigenvalue $\lambda$ is equal to
+    the dimension of $\Er$.
+\end{defn}
+
+From Lemma \ref{lem:ev-kern} follows that:
+
+\begin{corollary}
+\label{er-mat}
+    $\lambda$ is an Eigenvalue of $\A \in \E^{n \times n}$, iff $\A - \lambda \I$ is singular.
+    The Eigenspace $\Er$ of an Eigenvalue $\lambda$ of $\A$ is a subspace,
+    different from the null space, which is:
+
+    \begin{equation}
+        \Er = \ker (A - \lambda \I)
+    \end{equation}
+
+    The \textbf{geometric multiplicity} of $\lambda$ is therefore:
+
+    \begin{equation}
+        \dim \Er = \dim \ker (\A - \lambda \I) = n - \rank (\A - \lambda \I)
+    \end{equation}
+\end{corollary}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
