@@ -3,10 +3,18 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage[left=2cm,right=3cm,top=2cm,bottom=2.5cm]{geometry}
+
 \usepackage{parskip}
+
+\usepackage{tikz-cd}
 
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{mathtools}
+
+\usepackage{mdframed}
+
+\usepackage{xcolor}
 
 \newcommand{\uniti}{i}
 \newcommand{\defas}{\coloneqq}
@@ -23,26 +31,40 @@
 % Shortcuts for lin. alg
 \newcommand{\I}{\mat{I}}
 \newcommand{\A}{\mat{A}}
+\newcommand{\B}{\mat{B}}
+\newcommand{\T}{\mat{T}}
 
-\newcommand{\rank}[1]{\operatorname{rank} #1}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\trace}{\operatorname{trace}}
+\newcommand{\diag}{\operatorname{diag}}
 
 \newcommand{\Er}{E_{\lambda}}
+\newcommand{\charp}[1]{\chi_{#1}}
 
 \newcommand{\mat}[1]{\mathbf{#1}}
 \newcommand{\inv}[1]{{#1}^{-1}}
 
-%\newcommand{\ker}{\text{ker}}
-
 \let\oldxi\xi
-\renewcommand{\xi}{\mathbb{\oldxi}}
+\renewcommand{\xi}{\mathbf{\oldxi}}
+
+\let\oldeta\eta
+\renewcommand{\eta}{\mathbf{\oldeta}}
 
 \setcounter{section}{-1}
 
 \theoremstyle{plain}
 \newtheorem{defn}{Definition}[section]
 \newtheorem{lemma}{Lemma}[section]
-\newtheorem{theorem}{Threorem}[lemma]
-\newtheorem{corollary}{Corollary}[lemma]
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{corollary}[lemma]{Corollary}
+
+\newtheorem{alg}{Algorithm}[section]
+%\newmdtheoremenv [backgroundcolor=gray, %
+%innertopmargin=0pt, %
+%splittopskip=\topskip, %
+%skipbelow=6pt,%
+%skipabove=6pt,%
+%topline=false,bottomline=false,leftline=false,rightline=false]{alg}{Algorithm}[section]
 
 
 \numberwithin{equation}{section}
@@ -52,7 +74,6 @@
 \author{Ben Fiedler}
 \title{Linear Algebra \\
        \large{Özlem Imamoglu, Olga Sorkine-Hornung}}
-\date{ }
 
 \maketitle
 \tableofcontents
@@ -164,7 +185,7 @@ an Eigenvalue of $\A$ iff there exists a vector $\xi$ such that:
 \end{equation}
 
 \begin{lemma}
-\label{equiv-map-mat}
+\label{lem:equiv-map-mat}
     Let $F \colon V \rightarrow V$ be a linear mapping,
     $\kappa_{V} \colon V \rightarrow \E^{n}$ a coordinate mapping for an
     arbitrary basis and $\A = \kappa_{V} F \inv{\kappa_{V}}$ the matrix
@@ -243,24 +264,233 @@ From Lemma \ref{lem:ev-kern} follows that:
     The \textbf{geometric multiplicity} of $\lambda$ is therefore:
 
     \begin{equation}
+    \label{geo-mult-mat}
         \dim \Er = \dim \ker (\A - \lambda \I) = n - \rank (\A - \lambda \I)
     \end{equation}
 \end{corollary}
 
+\begin{proof}
+    The second equality in \ref{geo-mult-mat} follows from the dimension formula.
+    The rest follows from Lemma \ref{lem:ev-kern}.
+\end{proof}
 
+How can we find Eigenvalues? We have to choose $\lambda$ so that $\A - \lambda \I$
+is singular, which happens iff $\det (\A - \lambda \I) = 0$. The formula of
+Sarrus gives us:
 
+\begin{equation}
+    \begin{split}
+        \det \A &=
+        \begin{vmatrix}
+            a_{11} - \lambda & a_{12} & \dots  & a_{1n} \\
+            a_{21} & a_{22} - \lambda & \dots  & a_{2n} \\
+            \vdots & \vdots           & \ddots & \vdots \\
+            a_{n1} & a_{n2}           & \dots  & a_{nn} - \lambda \\
+        \end{vmatrix}
+        \\[0.3cm]
+        &= (-\lambda)^{n} + (a_{11} + a_{22} + \dots + a_{nn}) (-\lambda)^{n-1} + \dots + \det \A
+        \\
+        &\eqqcolon \charp{\A}(\lambda)
+    \end{split}
+\end{equation}
 
+$\charp{\A}(\lambda)$ is a polynomial in $\lambda$ of degreen $n$.
 
+\begin{defn}
+    The polynomial
+    \begin{equation}
+        \charp{\A}(\lambda) \coloneqq \det (\A - \lambda \I)
+    \end{equation}
+    is called \textbf{characteristic polynomial} of $\A \in \E^{n \times n}$ and
+    the equation
+    \begin{equation}
+        \charp{\A}(\lambda) = 0
+    \end{equation}
+    is called \textbf{characteristic equation}.
+\end{defn}
 
+The sum of the diagonal elements is called \textbf{trace}.
 
+\begin{equation}
+    \trace \A = a_{11} + a_{22} + \dots + a_{nn}
+\end{equation}
 
+\begin{lemma}
+    \label{lem:charp-form}
+    The characteristic polynomial $\charp{\A}$ has the form
+    \begin{equation}
+        \begin{split}
+            \charp{\A}(\lambda) &= \det (\A - \lambda \I) \\
+            &= (-\lambda)^{n} + \trace \A (-\lambda)^{n-1} + \dots + \det \A
+        \end{split}
+    \end{equation}
+\end{lemma}
 
+\begin{proof}
+    The proof is obvious by filling in the definitions.
+\end{proof}
 
+\begin{theorem}
+    \label{the:ev-is-root}
+    $\lambda \in \E$ is an Eigenvalue of $\A$ iff $\lambda$ is a root of the
+    characteristic polynomial $\charp{\A}$ or a solution to the characteristic
+    equation, respectively.
+\end{theorem}
 
+\begin{proof}
+    Again, the proof is obvious by filling in the definitions.
+\end{proof}
 
+By the fundamental theorem of algebra, every polynomial of degree $n$ has
+exactly $n$ roots in $\C$. So, $\charp{\A}$, which is of degree $n$ and has $(-1)^{n}$ as its highest
+coefficient, can be written as:
 
+\begin{equation*}
+    \charp{\A} = (\lambda_{1} - \lambda)(\lambda_{2} - \lambda)\dots(\lambda_{n} - \lambda),
+\end{equation*}
 
+where $\lambda_{i} \in \C, \ i \in \{1, \dots, n\}$
 
+A polynomial over $\R$ can have complex roots, since $\R \subset \C$. Because of this,
+we assume $\E = \C$ for the rest of this section because otherwise, for a matrix
+$\A \in \R^{n \times n}$, there may exist an Eigenvalue $\lambda \not\in \R$ and a Eigenvector
+$v \in \R^{n}$ such that $\A v \in \R^{n}$ but $v \lambda \not\in \R^{n}$.
 
+The geometric multiplicity of an Eigenvalue $\lambda$ may or may not be equal to its
+multiplicity as root of $\charp{\A}$. Therefore we define another property of
+Eigenvalues as follows:
+
+\begin{defn}
+    The \textbf{algebraic multiplicity} of an Eigenvalue is equal to its multiplicity
+    as a root of the characteristic polynomial $\charp{\A}$
+\end{defn}
+
+The basis vector of the Eigenspaces of a matrix $\A$ can be determined as follows: \\
+
+\begin{alg}
+    For a matrix $\A \in \C^{n \times n}$ we can determine a basis for its
+    Eigenspace as follows:
+
+    \begin{enumerate}
+        \item{Determine the characteristic polynomial $\charp{\A}$.}
+        \item{Compute the roots $\lambda_{1} \dots \lambda_{n}$ of $\charp{\A}$.}
+        \item{For every Eigenvalue $\lambda_{k}$: Determine the basis of
+            $\ker (\A - \lambda_{k} \I)$ using the Gauss-Jordan elimination.}
+    \end{enumerate}
+\end{alg}
+
+Furthermore, it holds that:
+
+\begin{lemma}
+    For any matrix $\A \in \C^{n \times n}$, $\A$ is singular iff 0 is an
+    Eigenvalue of $\A$:
+
+    $$ \A \quad \text{singular} \quad \iff \quad 0 \in \sigma(\A) $$
+\end{lemma}
+
+\begin{proof}
+    $\A$ is singular iff $\A x = 0$ has nontrivial solutions, which implies that
+    $0$ must be an Eigenvalue of $\A$.
+\end{proof}
+
+Alternatively, if $\A$ is singular, then $\det \A = 0$. But then the characteristic
+polynomial $\charp{\A}$ is of the form $(-\lambda)^{n} + \trace \A (-\lambda)^{n - 1} + \dots + 0$
+which in turn implies that one can factor out $-\lambda$:
+
+\begin{align*}
+     & (-\lambda)^{n} + \trace \A (-\lambda)^{n - 1} + \dots + 0 \\
+    =& (-\lambda) ((-\lambda)^{n-1} + \trace \A (-\lambda)^{n-2} + \dots) \\
+    =& (0 - \lambda) ((-\lambda)^{n-1} + \trace \A (-\lambda)^{n-2} + \dots) \\
+\end{align*}
+
+This shows that zero is a root of $\charp{\A}$, which in turn implies that 0 is an
+Eigenvalue of $\A$.
+
+\subsection{Similarity transformation}
+
+We now look at linear maps $F \colon V \rightarrow V$, $x \mapsto F x$ of a vector
+space $V$ with Dimension $n$ and the transformation matrices $\A$ and $\B$ for the
+bases $\{b_1, b_2, \dots, b_n\}$ and $\{b'_1, b'_2, \dots ,b'_n\}$.
+
+\[
+    \begin{tikzcd}[row sep=large, column sep=large]
+    x \in V \arrow{r}{F} \arrow{d}{\kappa_V} & y \in V \arrow{d}{\kappa_V} \\
+    \xi \in \E^n \arrow{r}{\A} \arrow{u}{\inv{\kappa_V}} \arrow{d}{\inv{\mat{T}}} & \eta \in \E^n \arrow{u}{\inv{\kappa_V}} \arrow{d}{\inv{\mat{T}}} \\
+    \xi' \in \E^n \arrow{r}{\B} \arrow{u}{\mat{T}} & \eta' \in \E^n \arrow{u}{\mat{T}}
+\end{tikzcd}
+\]
+
+Remember that, according to the diagram:
+
+\begin{equation}
+    \B = \inv{\mat{T}} \A \mat{T}, \quad \A = \mat{T} \B \inv{\mat{T}}
+\end{equation}
+
+which states that $\A$ and $\B$ are similar. The transformation
+$\A \mapsto \B = \inv{\mat{T}} \A \mat{T}$ is called \textbf{similarity transformation}.
+
+We ask us how the transformation matrix can be simplified by choosing an appropriate basis.
+Formulated differently: How can the matrix $\A$ be simplified by a similarity transformation
+$\A \mapsto \B = \inv{\mat{T}} \A \mat{T}$. This question is closely related to
+the theory of Eigenvalues.
+
+\begin{theorem}
+    Similar matrices have the same characteristic polynomial $\charp{\A}$; They
+    also have the same determinant, the same trace and the same Eigenvalues.
+
+    Both the algebraic and geometric multiplicities of all Eigenvalues are the same.
+\end{theorem}
+
+\begin{proof}
+    Let $\B = \inv{\mat{T}} \A \mat{T}$. Then we know the following about $\charp{\B}$:
+    \begin{align*}
+        \charp{\B} &= \det(\B - \lambda \I) \\
+        &= \det(\inv{\T} \A \T - \lambda \I) \\
+        &= \det((\inv{\T} \A - \lambda \inv{\T}) \T) \\
+        &= \det(\inv{\T} (\A - \lambda \I) \T) \\
+        &= \det(\inv{\T}) \det(\A - \lambda \I) \det(\T) \\
+        &= \det(\A - \lambda \I) \\
+        &= \charp{\A}
+    \end{align*}
+
+    From lemma \ref{lem:charp-form} and theorem \ref{the:ev-is-root} we can see that
+    the determinants, traces and eigenvalues of $\A$ and $\B$ and their algebraic multiplicities match.
+
+    We can see that their geometric multiplicities match by lemma \ref{lem:equiv-map-mat}.
+
+    \begin{align*}
+        \underbrace{\inv{\T} \A \T}_{= \B} \underbrace{\inv{\T} v}_{\eqqcolon w} &= \underbrace{\inv{\T} v}_{\eqqcolon w} \lambda \\
+        \underbrace{\T \B \inv{\T}}_{= \A} \underbrace{\T w}_{\eqqcolon v} &= \underbrace{\T w}_{\eqqcolon v} \lambda
+    \end{align*}
+
+    We see that:
+    \begin{equation}
+        \Er(\B) = \inv{\T} \Er(\A), \quad \Er(\A) = \T \Er(\B)
+    \end{equation}
+
+    Since $\T$ is regular, we follow that $\dim \Er(A) = \dim \Er(\B)$.
+\end{proof}
+
+If a vector space $V$ has a basis of eigenvectors, then the transformation matrix
+$\A$ is diagonal.
+
+\begin{lemma}
+    A transformation matrix to a linear map $F \colon V \rightarrow V$ is diagonal
+    iff the Basis of $V$ contains only eigenvectors.
+\end{lemma}
+
+\begin{proof}
+    If $v_1, v_2, \dots, v_n$ are eigenvectors which form a basis of $V$ with
+    $\lambda_1, \lambda_2, \dots, \lambda_n$ as the corresponding eigenvalues, then
+    $F v_l = v_l \lambda_l$ has the coordinate vector
+    \[
+        (\ 0\ \dots\ 0\ \lambda_l\ 0\ \dots\ 0\ )^\intercal
+    \]
+which shows that the transformation matrix $\A = \mat{\Lambda} = \diag(\lambda_1, \lambda_2, \dots, \lambda_n)$.
+\end{proof}
+
+\begin{defn}
+    A basis of eigenvectors of $F$ is calles eigenbasis.
+\end{defn}
 
 \end{document}
