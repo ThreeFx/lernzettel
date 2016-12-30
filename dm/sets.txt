@@ -1,0 +1,107 @@
+Mengen, Relationen und Funktionen
+
+Definitionen:
+
+    A = B :<=> forall x. (x in A <-> x in B)
+    A = B :<=> (A subset B) ^ (B subset A)
+
+    A subset B :<=> forall x. (x in A -> x in B)
+
+    -- powerset
+    P(A) :<=> {S | S subset A}
+    |P(A)| = 2^(|A|)
+
+    A union B :<=> {x | x in A v x in B}
+    A intersect B :<=> {x | x in A ^ x in B}
+
+    not A = {x | not (x in A)}
+
+    B - A / B \ A :<=> {x | x in B ^ not (x in A)}
+
+    A x B = {(a, b) | a in A ^ b in B}
+
+    leere Menge:
+    forall x. not (x in empty)
+
+    Lemma: forall A. empty subset A
+    Lemma: empty is unique
+
+Regeln:
+
+Idempotenz:      A union     A = A
+                 A intersect A = A
+
+Kommutativität:  A union     B = B union     A
+                 A intersect B = B intersect A
+
+Assoziativität:  A union (B union C) = (A union B) union C
+                 A intersect (B intersect C) = (A intersect B) intersect C
+
+Absorption:      A intersect (A union B) = A
+                 A union (A intersect B) = A
+
+Distributivität: A union (B intersect C) = (A union B) intersect (A union C)
+                 A intersect (B union C) = (A intersect B) union (A intersect B)
+
+Komplement:      A union (not A) = U
+                 A intersect (not A) = empty
+
+Konsistenz:      A subset B <=> (A intersect B) = A <=> (A union B) = B
+
+Beweis: Einsetzen der Definitionen und Aussagenlogik anwenden.
+
+Relationen
+
+Definitionen
+
+rho : (A x B) (rho ist TM von (A x B)) ist eine Relation und kann
+
+    symmetrisch:     rho = (inv rho)          oder a rho b <=> b rho a
+    antisymmetrisch: rho intersect (inv rho)  oder a rho b ^ b rho a => a = b
+    transitiv:       rho^2 subset rho oder    oder a rho b ^ b rho c => a rho c
+    reflexiv:        id subset rho            oder forall a. a rho a
+    irreflexiv:      rho intersect id = empty oder forall a. not (a rho a)
+
+inv rho ist definiert als:
+
+    a rho b <-> b (inv rho) a
+
+d.h. a (inv rho) b g.d.w. b rho a (Argumente vertauschen)
+Bsp.: inv (<=) = (>=), inv (=) = (=)
+
+Lemma: rho ist transitiv <=> rho^2 subset rho
+
+Proof:
+(=>)
+    Assume that rho is transitive and a rho^2 b.
+    Zu zeigen: a rho b
+    a rho^2 b <=> exists c. (a rho c ^ c rho b)
+    Weil rho transitiv ist, muss a rho b also bereits in rho sein.
+
+(<=)
+    Nehme an, rho^2 subset rho. Dann, falls a rho b und b rho c,
+    a rho^2 c. Aber da rho^2 subset rho, muss rho transitiv sein.
+
+Transitiver Abschluss p^*
+
+      inf
+p^* =  U  p^n
+      n=1
+
+a rho^* b <=> exists c1 .. ck. (a rho c1 ^ c1 rho c2 ^ .. ^ ck rho b)
+
+id_A = {(a, a) | a in A}
+
+Komposition von Relationen
+
+rho   subset (A x B)
+sigma subset (B x C)
+
+rho . sigma subset (A x C)
+a (rho . sigma) b :<=> exists c. (a rho c ^ c sigma b)
+
+Komposition ist assoziativ:
+
+(rho . sigma) . phi == rho . (sigma . phi)
+
+

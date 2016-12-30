@@ -1,0 +1,86 @@
+Diskrete Mathematik Zusammenfassung
+
+Beweise/Beweistechniken:
+
+Direkter Beweis einer Implikation S => T:
+
+ - Assume S
+ - Prove S => T
+
+Indirect proof of an implication S => T:
+
+ - Assume not T
+ - Prove not T => not S
+
+Reason: (not T -> not S) -> (S -> T) is a tautology.
+So, not T -> not S |= S -> T
+
+Composition of Implications: S => T and T => U:
+If S => T and T => U, one concludes S => U
+
+Reason: S -> T ^ T -> U |= S -> U
+
+Modus ponens of S:
+
+ - State R
+ - State R => S
+ - Prove both R and R -> S
+
+Reason: A ^ (A -> B) |= B
+
+Case Distinction of S:
+
+ - State all cases R0 .. Rk
+ - Prove that one case must occur
+ - Also prove that forall i. Ri => S
+
+Proof by Contradiction of S:
+
+ - State T
+ - Prove not S -> T
+ - Prove not T
+
+Reason: not T ^ (not S -> T) |= S
+
+Existence Proof:
+
+If there exists an a in U such that P(a) is true, then exists x. P(x) is true.
+
+Pigeonhole principle:
+
+Dividing n objects into k containers always implies that there exists one
+container that must have at least `ceil (n / k)` objects.
+
+Proof by Counterexample:
+
+If there exists an a such that not P(a) is true, the statement
+not forall x. P(x) is true. This is a special case of the existence proof.
+
+Reason: exists x. not P(x) == not forall x. P(x)
+
+Proof by Induction:
+
+Prove P(0) (actually, it works for any fixed natural number a).
+Prove forall n. P(n) -> P(n + 1).
+
+Reason: P(0) ^ forall n. (P(n) -> P(n + 1)) |= forall n. P(n)
+
+Proof that induction is correct using the well ordering principle:
+
+We state a tautology:
+F := (P(0) ^ forall n. (P(n) -> P(n + 1))) -> (forall n. P(n))
+
+not F must be unsatisfiable.
+
+not F == not (P(0) ^ forall n. (P(n) -> P(n + 1))) -> (forall n. P(n))
+      == P(0) ^ forall n. (P(n) -> P(n + 1)) ^ not forall n. P(n)
+         (1)             (2)                         (3)
+
+(3) implies that there exists a smallest a such that P(a) is false.
+
+From (1) and (2) we can follow P(a) by setting n = a - 1:
+
+P(0) ^ .. ^ (P(a - 1) -> P(a))
+
+So, we proved both `not F -> (P(a) and not P(a)) == not F -> false`, which proves
+that not F is false. Therefore, F must be true.
