@@ -23,8 +23,43 @@ Definitionen:
     leere Menge:
     forall x. not (x in empty)
 
-    Lemma: forall A. empty subset A
-    Lemma: empty is unique
+Lemma: forall A. empty subset A
+Beweis:
+empty subset A :<=> forall x. (x in empty -> x in A)
+Weil x in empty immer falsch ist, ist die Implikation wahr für alle x.
+alt. Beweis:
+Annahme: Es gibt eine Menge A, sodass not (empty subset A)
+  not (empty subset A) =  not (forall x. x in empty -> x in A)
+                       =  not (forall x. not (x in empty) v x in A)
+                       =  exists x. (not ((not (x in empty)) v x in A))
+                       =  exists x. (x in empty ^ not (x in A))
+                       => exists x. (x in empty) ^ exists x. (not (x in A))
+                       => exists x. x in empty
+                       => not (forall x. (not (x in empty)))
+                       Widerspruch, da forall x. not (x in empty)
+
+Lemma: empty is unique
+Beweis:
+Annahme: empty != empty', beide sind leere Mengen forall x. (not (x in A))
+
+Da beide verschieden sind, muss eine Menge ein Element beinhalten, dass die andere
+nicht besitzt. o.B.d.A. sei empty diese Menge. Dann
+
+  exists x. (x in empty ^ not (x in empty'))
+
+aber dies erzeugt einen Widerspruch, da forall x. (not (x in empty))
+
+Also ist die Annahme falsch und es gilt empty = empty'
+
+alt. Beweis:
+Seien empty, empty' leere Mengen. Zu zeigen: empty = empty'
+
+Da empty leere Menge gilt:
+  empty subset empty'
+Da empty' leere Menge gilt:
+  empty' subset empty
+
+Also gilt empty = empty'
 
 Regeln:
 
@@ -62,6 +97,9 @@ rho : (A x B) (rho ist TM von (A x B)) ist eine Relation und kann
     reflexiv:        id subset rho            oder forall a. a rho a
     irreflexiv:      rho intersect id = empty oder forall a. not (a rho a)
 
+a ist in Relation zu b g.d.w. (a, b) in rho:
+a rho b <=> (a, b) in rho
+
 inv rho ist definiert als:
 
     a rho b <-> b (inv rho) a
@@ -71,7 +109,7 @@ Bsp.: inv (<=) = (>=), inv (=) = (=)
 
 Lemma: rho ist transitiv <=> rho^2 subset rho
 
-Proof:
+Beweis:
 (=>)
     Assume that rho is transitive and a rho^2 b.
     Zu zeigen: a rho b
@@ -103,5 +141,30 @@ a (rho . sigma) b :<=> exists c. (a rho c ^ c sigma b)
 Komposition ist assoziativ:
 
 (rho . sigma) . phi == rho . (sigma . phi)
+       (1)                    (2)
+
+Beweis: Zu zeigen: (1) subset (2) und (2) subset (1)
+                        (i)                (ii)
+(i)
+    a ((rho . sigma) . phi) d :<=> exists c. (a (rho . sigma) c ^ c phi d)
+    a (rho . sigma) c :<=> exists b. (a rho b ^ b sigma c)
+    also:
+    exists b c. (a rho b ^ b sigma c ^ c phi d)
+    exists c. (b sigma c ^ c phi d) => b (sigma . phi) d
+    And from a rho b ^ b (sigma . phi) d we follow that a (rho . (sigma . phi)) d
+(ii)
+    Analogous to (i)
+
+rho subset (A x B), sigma subset (B x C)
+inv (rho . sigma) = inv sigma . inv rho
+
+Beweis:
+     c (inv (rho . sigma)) a
+ <=> a (rho . sigma) c
+:<=> exists b. (a rho b ^ b sigma c)
+ <=> exists b. (b (inv rho) a ^ c (inv sigma) b)
+ <=> exists b. (c (inv sigma) b ^ b (inv rho) a)
+:<=> c (inv sigma . inv rho) a
+
 
 
