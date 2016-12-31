@@ -138,7 +138,7 @@ sigma subset (B x C)
 rho . sigma subset (A x C)
 a (rho . sigma) b :<=> exists c. (a rho c ^ c sigma b)
 
-Komposition ist assoziativ:
+Lemma 3.5 Komposition ist assoziativ:
 
 (rho . sigma) . phi == rho . (sigma . phi)
        (1)                    (2)
@@ -155,6 +155,8 @@ Beweis: Zu zeigen: (1) subset (2) und (2) subset (1)
 (ii)
     Analogous to (i)
 
+Lemma 3.6 Komposition von Inversen
+
 rho subset (A x B), sigma subset (B x C)
 inv (rho . sigma) = inv sigma . inv rho
 
@@ -166,5 +168,40 @@ Beweis:
  <=> exists b. (c (inv sigma) b ^ b (inv rho) a)
 :<=> c (inv sigma . inv rho) a
 
+Äquivalenzrelationen
 
+Eine Äquivalenzrelation (~) ist
 
+ - reflexiv
+ - transitiv
+ - symmetrisch
+
+Die Äquivalenzklasse eines Elements a sei definiert als:
+
+[a]_~ := {b in A | b ~ a}
+
+Bsp.: (mod 3), [0]_(mod 3) = {.., -3, 0, 3, ..}
+
+Lemma 3.8 Schnittmenge von Äquivalenzrelationen
+
+Seien rho, sigma Äquivalenzrelationen. Dann gilt:
+(rho intersect sigma) ist eine Äquivalenzrelation
+
+Beweis:
+ - reflexiv:
+ id subset rho ^ id subset sigma => id subset (rho intersect sigma)
+ Distributivität: (A union B) intersect (A union C) = A union (B intersect C)
+
+ - symmetrisch:
+ Betrachte (a, b) in rho.
+ Es gibt zwei Fälle:
+ Fall 1: (a, b) in sigma:
+   (b, a) in rho und (b, a) in sigma, da beide symmetrisch.
+   => {(a, b), (b, a)} subset (rho intersect sigma) => Symmetrie beibehalten
+ Fall 2: not ((a, b) in sigma)
+   Da (a, b) nicht in sigma kann auch (b, a) nicht in sigma sein. Also
+   ist weder (a, b) noch (b, a) in (rho intersect sigma) => Symmetrie beibehalten
+ Analog für (a, b) in sigma aber nicht in rho.
+
+ - transitiv:
+ ???
