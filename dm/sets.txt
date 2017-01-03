@@ -41,14 +41,12 @@ Annahme: Es gibt eine Menge A, sodass not (empty subset A)
 Lemma: empty is unique
 Beweis:
 Annahme: empty != empty', beide sind leere Mengen forall x. (not (x in A))
-
 Da beide verschieden sind, muss eine Menge ein Element beinhalten, dass die andere
 nicht besitzt. o.B.d.A. sei empty diese Menge. Dann
 
   exists x. (x in empty ^ not (x in empty'))
 
-aber dies erzeugt einen Widerspruch, da forall x. (not (x in empty))
-
+aber dies erzeugt einen Widerspruch, da forall x. (not (x in empty)).
 Also ist die Annahme falsch und es gilt empty = empty'
 
 alt. Beweis:
@@ -204,4 +202,18 @@ Beweis:
  Analog für (a, b) in sigma aber nicht in rho.
 
  - transitiv:
- ???
+ Falls (a, b) und (b, c) in (rho intersect sigma), dann sind sind
+ (a, b) und (b, c) auch in rho und sigma. Da rho und sigma beide transitiv sind,
+ ist (a, c) auch in rho und sigma, was bedeutet, dass
+ (a, c) in (rho intersect sigma) ist.
+
+Partition
+
+Eine Partition einer Menge A ist die Teilung in Untermengen Si, i in N, sodass
+Si intersect Sj = empty, falls i != j und
+  n
+  U  Si = A
+ i=1
+
+Lemma 3.9 A / ~, wobei ~ Äquivalenzrelation ist eine Partition von A.
+A / ~ := {[a]_~ | a in A} ist die Menge der Äquivalenzklassen von A.
