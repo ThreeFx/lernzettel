@@ -363,3 +363,96 @@ Abzählbarkeit
 Eine Menge A ist genau dann abzählbar, wenn eine injektive Abbildung A -> N
 erzeugt werden kann.
 
+Def. 3.43:
+(i)   Zwei Mengen haben dieselbe Kardinalität, geschrieben A ~ B genau dann wenn
+      eine Bijektion A -> B existiert.
+(ii)  Die Kardinalität von B ist mindestens so groß wie die von A, geschrieben
+      A <= B genau dann wenn eine Injektion A -> B existiert.
+      Alternativ: A ~ C für irgendein C subset B.
+(iii) Eine Menge A heißt abzählbar falls A <= N und überabzählbar sonst.
+
+Lemma 3.13:
+(i)  Die Relation <= ist transitiv
+(ii) A subset B => A <= B
+
+Falls A und B endlich, dann A ~ B <=> |A| = |B|.
+
+Theorem 3.14
+Eine Menge ist abzählbar genau dann wenn A endlich oder A ~ N
+A abzählbar <=> A endlich v A ~ N
+
+Beweis:
+(<=)
+    Siehe Definition
+(=>)
+    A ist abzählbar.
+    Siehe unten stehendes Lemma
+
+Lemma: Falls A unendl. und abzählbar, dann A ~ N.
+Beweis:
+Da A <= N, existiert eine Injektion f: A -> C subset N. Da C wohlgeordnet ist,
+gibt es ein kleinstes Element c0 in C. Jetzt definiert man g(c0) = 0 und
+betrachtet die Menge C - {c0}. Erneut gibt es ein kleinstes Element c1 und
+definiert g(c1) = 1. So definiert man induktiv eine Abbildung
+g: C subset N -> N. (f . g) ist nun die Bijektion zwischen A und N.
+
+Wichtige abzählbare Mengen:
+
+Z = {0, -1, 1, -2, 2, -3, 3, ..}
+
+{0, 1}^* = {epsilon, 0, 1, 00, 01, 10, 11, 000, 001, ..}
+Mögliche Methode: 1 davorstellen und als Binärzahl interpretieren.
+
+N x N = {(0, 0), (0, 1), (1, 0), (0, 2), (1, 1), (2, 0), ..}
+Mögliche Methode: Diagonalen entlang, also aufsteigend der Summe x + y nach.
+
+A abzählbar, B abzählbar. (A x B) abzählbar.
+Beweis:
+f1 : A -> N  existiert nach Theorem 3.14
+f2 : B -> N  existiert nach Theorem 3.14
+g(a, b) = f1 &&& f2 = (f1(a), f2(b))
+
+h : N^2 -> N  existiert wie oben beschrieben
+h . g ist Bijektion (A x B) -> N
+
+A und Ai, i in N, abzähllbare Mengen
+Dann sind:
+ - forall n. A^n (n-Tupel über A)
+
+ -   U    Ai = A1 union A2 union .. union An
+   i in N
+
+ - A^* Folgen mit endlicher Länge bestehend aus A
+alle abzählbar
+
+Überabzählbarkeit
+
+Die Menge der unendlich langen Binärfolgen
+
+{0, 1}^inf
+
+ist überabzähbar.
+
+Beweis:
+Annahme: {0, 1}^inf abzählbar
+f : N -> {0, 1}^inf Bijektion
+s0 = 0000000000... (beliebige Zahl)
+s1 = 0101010101... auch
+s2 = 0010010010... auch
+s3 = 1101110111... auch
+ .
+sk = 0011000110... auch
+ .
+
+Definieren wir
+
+s = not s00, not s11, not s22, .., not skk
+s ist ungleich s0, s1, ..
+not (s in f(n) for all n), da f(n) sich immer im n-ten Bit von s unterscheidet.
+
+s ist nicht in der Aufzählung vorhanden, aber ist eine valide Binärfolge.
+=> f kann keine Bijektion sein
+=> {0, 1}^inf ist überabzählbar.
+
+Daraus folgt auch, dass es nicht berechenbare Funktionen gibt, wie die
+Haltefunktion.
