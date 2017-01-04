@@ -8,3 +8,4 @@ Es gibt:
  - Diskrete Mathematik
   * [Beweise](dm/proofs.txt)
   * [Mengen, Relationen, usw.](dm/sets.txt)
+  * [Zahlentheorie](dm/numbertheory.txt)

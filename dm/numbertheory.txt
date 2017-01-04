@@ -1,0 +1,59 @@
+Zahlentheorie
+
+Mathematischer Teilbereich, Theorie der natürlichen und ganzen Zahlen
+  N = {0, 1, 2, ..} oder Z = {.., -2, -1, 0, 1, 2, ..}
+
+Ganze Zahlen bilden einen besonderen Ring, mehr dazu in Algebra.
+
+Ganze Zahlen a, b. a teilt b, geschrieben a | b falls es ein Vielfaches von a
+gibt, welches c ergibt.
+
+a | b :<=> exists c. b = a * c
+
+a ist Teiler von b, b ist Vielfaches von a. Der Quotient c ist, falls er
+existiert, eindeutig und wir schreiben c = b / a. Wir schreiben a !| b falls a
+b nicht teilt.
+
+Alle ganze Zahlen außer Null sind ein Teiler von 0.
+  forall a != 0. a | 0
+
+1 und -1 teilen jede ganze Zahl:
+  forall a. 1 | a ^ -1 | a
+
+Teilen mit Rest
+Für alle Zahlen a und d mit d != 0 existieren eindeutige q und r, sodass
+a = dq + r
+
+forall a. forall d != 0. exists q r. a = dq + r
+
+a ist der Dividend, d der Teiler, q der Quotient und r der Rest
+
+Beweis: Sei S die Menge aller s, sodass a = dt + s für beliebige t und s >= 0
+
+S = {s | s >= 0 ^ exists t in Z. a = dt + s}
+
+Zu zeigen:
+1. S ist nicht leer.
+2. S enthält ein r < |d|
+3. Es existiert nur ein r < |d|
+
+1. Fallunterscheidung:
+a. a >= 0: Ein mögliches s ist: s = a - d * 0 = a
+b. a < 0 ^ d > 0: a = da + (1 - d)a, also (1 - d)a in S
+c. a < 0 ^ d < 0: a = d(-a) + (1 + d)a, also (1 + d)a in S
+
+2. Beweis, dass kleinstes Element von S < |d|: Widerspruchsbeweis
+Ganz viele Fallunterscheidungen - ich hab besseres zu tun
+
+3. genau so
+
+Größte gemeinsame Teiler
+Für a, b != 0 heißt d ein größter gemeinsaer Teiler (gcd), falls
+  d | a ^ d | b ^ (forall c. c | a ^ c | b -> c | d)
+
+Lemma 4.2
+  forall m n q. gcd(m - qn, n) = gcd(m, n)
+Beweis:
+   gcd(m - qn, n)       // Sei d ein gcd von m - qn und n
+ = d | (m - qn) ^ d | n // d teilt n schon, also teilt d auch qn
+ = d | m                // also muss d auch m teilen
