@@ -54,6 +54,35 @@ Für a, b != 0 heißt d ein größter gemeinsaer Teiler (gcd), falls
 Lemma 4.2
   forall m n q. gcd(m - qn, n) = gcd(m, n)
 Beweis:
-   gcd(m - qn, n)       // Sei d ein gcd von m - qn und n
- = d | (m - qn) ^ d | n // d teilt n schon, also teilt d auch qn
- = d | m                // also muss d auch m teilen
+     gcd(m, n)       // Sei d ein gcd von m und n
+:<=> d | m ^ d | n ^ forall f. (f | m ^ f | n -> f | d) // d teilt n schon,
+                                                        // also auch qn
+ <=> d | m ^ d | qn ^ d | n ^ forall f. (f | m ^ f | qn ^ f | n -> f | d)
+ <=> d | (m - qn) ^ d | n ^ forall f. (f | (m - qn) ^ f | n -> f | d)
+:<=> gcd(m - qn, n)
+
+Das durch a und b erzeugte Ideal (a, b) ist definiert als:
+
+  (a, b) :<=> {ua + vb | u, v in Z}
+  (a)    :<=> {ua | u in Z}
+
+Lemma 4.3 Für a, b in Z existiert ein d in Z sodass
+  (a, b) = (d)
+
+Beweis: Sei d das kleinste positive Element in (a, b). Trivialerweise gilt nun
+(d) subset (a, b). Es bleibt zu zeigen, dass (a, b) subset (d). Sei c in (a, b)
+Für c existieren q und r sodass c = dq + r. Sowohl c als auch d sind in (a, b),
+also muss r in (a, b) sein. Da d das kleinstmögliche positive Element von (a, b)
+ist, muss r = 0 sein.
+
+Lemma 4.4 Falls (a, b) = (d) ist d ein gcd von a und b
+
+Beweis: d ist ein gemeinsamer Teiler, da a in (d) und b in (d). Da (d) = (a, b)
+muss jedes Vielfache von d sich als ua + vb ausdrücken lassen.
+
+forall u. exists v w. ud = va + wb
+
+
+Korollar 4.5:
+
+Euklids Algorithmus
