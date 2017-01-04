@@ -217,3 +217,149 @@ Si intersect Sj = empty, falls i != j und
 
 Lemma 3.9 A / ~, wobei ~ Äquivalenzrelation ist eine Partition von A.
 A / ~ := {[a]_~ | a in A} ist die Menge der Äquivalenzklassen von A.
+
+Beweis:
+
+A / ~ ist vollständig (union von allen [a]_~ ist A): trivial, da ~ reflexiv sind
+alle Elemente in den Mengen [a]_~ enthalten.
+
+A / ~ besitzt disjunkte Mengen. Betrachten wir zwei Elemente a und b. Es gilt zu
+zeigen: Falls a ~ b dann ist [a]_~ = [b]_~ und falls
+a !~ b: [a]_~ intersect [b]_~ = empty.
+
+Fall 1: a ~ b. Let c be in [a]. Then:
+   c in [a]
+-> c ~ a
+-> c ~ b
+-> c in [b]
+-> [a] subset [b]
+The reverse follows similarily.
+
+Fall 2: a !~ b
+Nehmen wir an [a] intersect [b] != empty
+Dann existiert ein c dass in sowohl [a] als auch [b] ist.
+   [a] intersect [b] != empty
+-> exists c. c in [a] ^ c in [b]
+-> c ~ a ^ c ~ b
+-> a ~ b (symm. + trans.)
+-> Widerspruch.
+-> [a] intersect [b] = empty
+
+Partielle Ordnungen (posets)
+
+Eine partielle Ordnung auf einer Menge A ist eine Relation rho, die
+ - reflexiv
+ - antisymmetrisch
+ - transitiv
+ist. Bsp.: <=, >=, subset
+
+Def.: a < b :<=> a <= b ^ not (a = b)
+
+Ist a <= b oder a >= b, so sind a und b vergleichbar.
+
+Sind beliebige zwei Elemente vergleichbar, so ist die Menge A total geordnet.
+
+Ist die Menge A wohlgeordnet und besitzt jede nicht-leere Teilmenge von A ein
+kleinstes Element, so nennt man A wohlgeordnet.
+
+b überdeckt a <=> a < b ^ not (exists c. a < c ^ c < b)
+
+Hasse diagram: Visualisation eines posets. Falls a < b ist b höher als a. Es
+werden nur Verbindungen zwischen überdeckenden Elementen gezeichet:
+
+Bsp: ({1, 2, 3, 4, 6, 8, 12, 24}, |)
+
+        24
+       / \
+      8   12
+      | / |
+      4   6    Bsp.: Kein Pfeil zwischen 8 und 2, da 4 dazwischen.
+      | / |
+      2   3
+       \ /
+        1
+
+Kombination von Posets:
+
+Für zwei posets (A, <=) und (B, [=) ist die Relation ( (=, A x B) ein poset
+
+(a1, b1) (= (a2, b2) :<=> a1 <= a2 ^ b1 [= b2
+
+Die lexikographische Sortierung ist ebenfalls ein poset.
+
+(a1, b1) <=_lex (a2, b2) :<=> a1 < a2 v (a1 = a2 ^ b1 [= b2)
+
+Besondere Elemente
+
+(A, <=) poset, (S, <=) TM davon.
+
+1. a in S minimal (maximal), falls
+  not (exists b. b < a (b > a))
+2. a in S ist das kleinste (größte) Element, falls
+  forall b in S. a <= b (a >= b)
+3. a in A ist untere (obere) Schranke von S, falls
+  forall b in S. a <= b (a >= b)
+4. a in A ist größte untere (kleinste obere) Schranke von S, falls
+  a das größte (kleinste) Element aller unterer (oberer) Schranken ist.
+
+größte untere Schranke - greatest lower bound - glb
+kleinste obere Schranke - least upper bound - lub
+
+Verbände (lattices), meets, joins
+
+Sei (A, <=) ein poset
+Zwischen zwei Elementen a und b sind meet und join folgendermaßen definiert:
+
+meet(a, b) :<=> größte untere Schranke der TM {a, b}
+join(a, b) :<=> kleinste obere Schranke der TM {a, b}
+
+Besitzen alle zwei Elemente aus A ein meet und ein join, so ist A ein Verband.
+
+Funktionen
+
+Funktionen sind besondere Relationen, die zwei weitere Eigenschaften erfüllen:
+
+f : A -> B
+f geht von Definitionsbereich (domain) A nach Wertebereich (codomain) B
+
+1. forall a. exists b. f(a) = b
+(f ist total)
+
+2. forall a . forall b b'. f(a) = b ^ f(a) = b' => b = b'
+(f ist wohldefiniert - ein Wert a besitzt einen eindeutigen Funktionswert b)
+
+Es gibt partielle Funktionen. Für diese muss 1. nicht erfüllt sein.
+
+Zwei Funktionen f und g sind gleich, wenn sie als Relationen gleich sind.
+f = g :<=> forall a. f(a) = g(a)
+
+f : A -> B, S subset A. Image of S under f:
+f(S) = {f(a) | a in S} subset B
+
+Funktionen können
+
+ - injektiv: a != b -> f(a) != f(b)
+ - surjektiv: forall b. exists a. f(a) = b
+sein.
+
+Eine Funktion die in- und surjektiv ist nennt man auch bijektiv.
+
+Bijektive Funktionen sind invertibel.
+
+Funktionenkomposition
+
+(f . g)(x) = f(g(x))
+rechts-nach-links
+
+Funktionenkomposition ist assoziativ.
+
+Beweis:
+  f . (g . h) = f((g . h)(x)) = f(g(h(x))) = (f . g)(h(x)) = (f . g) . h
+
+B^A: Menge der Fkt von A nach B falls A und B endlich.
+
+Abzählbarkeit
+
+Eine Menge A ist genau dann abzählbar, wenn eine injektive Abbildung A -> N
+erzeugt werden kann.
+
