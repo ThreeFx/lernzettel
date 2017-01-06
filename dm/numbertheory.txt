@@ -106,4 +106,52 @@ d := s1; u := u1; v := v1;
 
 Beweis omitted weil Baum
 
+Primfaktorisierung
 
+Eine positive ganze Zahl heißt prim, wenn sie nur 1 und sich selber teilt.
+
+Lemma 4.7: Wenn p eine Primzahl ist die ein Produkt x1 * .. * xn teilt, dann
+teilt p eine dieser Zahlen, i.e. p | xi für ein i in {1 .. n}
+
+Beweis per Induktion:
+n = 1: trivial
+n -> n + 1: p | (x1 * .. * x_n+1); y = x1*..*xn: p | y * x_n+1
+ - p  | y -> Induktionsvermutung
+ - p !| y ->
+   gcd(p, y) = 1
+   exists u v. up + vy = 1
+   x_n+1 = (u * p + v * y)x_n+1 = (u * x_n+1)p + v(y * x_n+1)
+   p teilt beide Zahlen, also auch ihre Summe: p | x_n+1
+
+Theorem 4.8: Jede Zahl >= 1 kann eindeutig in Primfaktoren zerlegt werden.
+
+Beweis:
+Sei x die kleinste Zahl ohne Primfaktorisierung. Entweder ist p eine Primzahl
+oder p lässt sich als Produkt zweier Zahlen k und m schreiben, die beide kleiner
+als x sind und sich somit als Produkt von Primzahlen schreiben lassen. Also lässt
+sich x auch als Produkt von Primzahlen schreiben.
+
+Gegeben zwei Primfaktorzerlegungen für x, wobei i < j -> pi < pj ^ qi < qj
+
+  p1^x1 p2^x2 .. pn^xn     und     q1^y1 q2^y2 .. qn^yn
+
+da pi | x für ein i muss es ein qj geben sodass pi = qj muss i = j und somit
+pi = qi. Jetzt muss nur noch gezeigt werden, dass xi = yi. Nehmen wir an, dass
+xi != yi. Then one can divide both numbers by p^min(xi, yi) but one of the
+resulting numbers is divisible by pi while the other is not. This is impossible,
+so xi = yi.
+
+Theorem 4.9 sqrt n ist irrational, ausser exists c. (n = c^2)
+Beweis:
+Sei n keine Quadratzahl. Nehmen wir an sqrt n ist rational.
+    sqrt^m n = a / b ^ gcd(a, b) = 1
+    n = a^m / b^m
+    n * b^m = a^m
+ -> n | a
+ -> exists r. a = n r
+ -> n * b^m = (n * r)^m
+ -> b^m = n^m-1 * r^m
+ -> n | b
+ -> gcd(a, b) > 1
+ -> Widerspruch
+ -> sqrt n ist irrational
