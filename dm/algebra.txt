@@ -1,0 +1,73 @@
+Algebra
+
+Eine Algebra ist eine Menge S und endlich viele k-äre Funktionen f^k_i, die
+bestimmten Gesetzen gehorchen:
+
+A = <S, f1, f2, .., fn>
+
+Halbgruppe (Semiring)
+. ist assoziativ
+
+<S, .>
+(S1) a . (b . c) == (a . b) . c
+
+Monoid
+Halbgruppe mit neutralem Element e.
+
+<S, ., e>
+(S1) a . (b . c) == (a . b) . c
+(S2) e . a == a == a . e
+
+Gruppe
+Monoid mit inversen Elementen.
+
+<G, ., e, (^-1)>
+(G1) a . (b . c) == (a . b) . c
+(G2) e . a == a == a . e
+(G3) a^-1 . a == e == a . a^-1
+
+Lemma: Man braucht nur rechtsneutrale Elemente / rechtsinverse. Der Rest folgt
+automatisch durch die anderen Axiome:
+
+(G2') exists e. forall a. a . e == a
+(G3') exists e. forall a. a . a^-1 == e
+
+   (a^-1)^-1 . a^-1
+ = e . [(a^-1)^-1 . a^-1]
+ = (a . a^-1) . [(a^-1)^-1 . a^-1]
+ = (a . [a^-1 . (a^-1)^-1]) . a^-1
+ = (a . e) . a^-1
+ = a . a^-1
+
+   (a^-1)^-1
+ = (a^-1)^-1 . e
+ = (a^-1)^-1 . [a^-1 . (a^-1)^-1]
+ = [(a^-1)^-1 . a^-1] . (a^-1)^-1
+ = (a . a^-1) . (a^-1)^-1
+ = a . (a^-1 . (a^-1)^-1)
+ = a . e
+ = a
+=> forall a. a . a^-1 == a^-1 . a
+(G3) proven just from (G2') and (G3')
+
+Proof of (G2) from (G3) and (G1):
+   a . e
+ = a . (a^-1 . a)
+ = (a . a^-1) . a
+ = e . a
+=> exists e. forall a. e . a == a == a . e
+
+Alternative (very elegant IMO):
+
+1. Any idempotent (a . a) == a element must be the identity:
+a = a . e = a . (a . a^-1) = (a . a) . a^-1 = a . a^-1 = e
+
+2. Show that a^-1 . a is idempotent:
+[a^-1 . a] . [a^-1 . a] = (a^-1 . [a . a^-1]) . a = (a^-1 . e) . a = a^-1 . a
+So a^-1 . a must be equal to the identity element e:
+=> a^-1 . a = e
+=> every right inverse is also a left inverse.
+
+3. Show that e is also right neutral
+ea = (a . a^-1) . a = a . (a^-1 . a) = a . e = a
+=> right neutral element e is also left neutral.
