@@ -9,28 +9,28 @@ Halbgruppe (Semiring)
 . ist assoziativ
 
 <S, .>
-(S1) a . (b . c) == (a . b) . c
+(S1) forall a b c.  a . (b . c) == (a . b) . c
 
 Monoid
 Halbgruppe mit neutralem Element e.
 
 <S, ., e>
-(S1) a . (b . c) == (a . b) . c
-(S2) e . a == a == a . e
+(S1) forall a b c.        a . (b . c) == (a . b) . c
+(S2) exists e. forall a.  e . a == a == a . e
 
 Gruppe
 Monoid mit inversen Elementen.
 
 <G, ., e, (^-1)>
-(G1) a . (b . c) == (a . b) . c
-(G2) e . a == a == a . e
-(G3) a^-1 . a == e == a . a^-1
+(G1) forall a b c.                     a . (b . c) == (a . b) . c
+(G2) exists e. forall a.               e . a == a == a . e
+(G3) exists e. forall a. exists a^-1.  a^-1 . a == e == a . a^-1
 
 Lemma: Man braucht nur rechtsneutrale Elemente / rechtsinverse. Der Rest folgt
 automatisch durch die anderen Axiome:
 
-(G2') exists e. forall a. a . e == a
-(G3') exists e. forall a. a . a^-1 == e
+(G2') exists e. forall a.               a . e == a
+(G3') exists e. forall a. exists a^-1.  a . a^-1 == e
 
    (a^-1)^-1 . a^-1
  = e . [(a^-1)^-1 . a^-1]
@@ -59,7 +59,7 @@ Proof of (G2) from (G3) and (G1):
 
 Alternative (very elegant IMO):
 
-1. Any idempotent (a . a) == a element must be the identity:
+1. Any idempotent (a . a == a) element must be the identity:
 a = a . e = a . (a . a^-1) = (a . a) . a^-1 = a . a^-1 = e
 
 2. Show that a^-1 . a is idempotent:
@@ -71,3 +71,22 @@ So a^-1 . a must be equal to the identity element e:
 3. Show that e is also right neutral
 ea = (a . a^-1) . a = a . (a^-1 . a) = a . e = a
 => right neutral element e is also left neutral.
+
+Some groups:
+
+<Z_m, +, 0, ->
+<Z_p, *, 1, ^-1> where p is prime number
+<Z, +, 0, ->
+<Q - {0}, *, 1, ^-1>
+
+Lemma 5.3:
+(i) (a^-1)^-1 = a
+P: (a^-1)^-1 = (a^-1)^-1 * e = (a^-1)^-1 * (a^-1 * a) = ((a^-1)^-1 * a^-1) * a = e * a = a
+(ii) (a * b)^-1 == b^-1 * a^-1
+  (a * b)^-1 = (a * b)^-1 * e = (a * b)^-1 * (a * a^-1)
+= (a * b)^-1 * (a * (e * a^-1)) = (a * b)^-1 * (a * ((b * b^-1) * a^-1))
+= ((a * b)^-1 * (a * b)) * (b^-1 * a^-1) = e * (b^-1 * a^-1) = (b^-1 * a^-1)
+(iii)
+a * b = a * c => b = c
+mult. von li mit a^-1
+a^-1 (a * b) = a^-1 * (a * c) => e * b = e * c => b = c
